@@ -3,6 +3,7 @@ from django.views.generic import RedirectView
 
 from pgweb.util.signals import register_basic_signal_handlers
 
+import pgweb.apt.views
 import pgweb.contributors.views
 import pgweb.core.views
 import pgweb.docs.views
@@ -109,6 +110,37 @@ urlpatterns = [
     ###
     url(r'^sitemap.xml', pgweb.core.views.sitemap),
     url(r'^sitemap_internal.xml', pgweb.core.views.sitemap_internal),
+
+    ###
+    # Packages
+    ###
+    url(r'^repos/apt/$', pgweb.apt.views.apt),
+    url(r'^repos/apt/dists/$', pgweb.apt.views.distributions),
+
+    url(r'^repos/apt/sources/$', RedirectView.as_view(url='/repos/apt/dists/', permanent=True)),
+    url(r'^repos/apt/sources/(?P<release>[\w.+-]+)/$', pgweb.apt.views.sources),
+
+    url(r'^repos/apt/source/$', RedirectView.as_view(url='/repos/apt/sources', permanent=True)),
+    url(r'^repos/apt/source/(?P<package_name>[\w.+-]+)/$', pgweb.apt.views.source),
+    url(r'^repos/apt/source/(?P<package_name>[\w.+-]+)/(?P<release>[\w.+-]+)/$', pgweb.apt.views.source),
+    url(r'^repos/apt/source/(?P<package_name>[\w.+-]+)/(?P<release>[\w.+-]+)/(?P<filename>copyright|debchangelog|changelog)/$', pgweb.apt.views.source),
+    url(r'^repos/apt/source/(?P<package_name>[\w.+-]+)/(?P<release>[\w.+-]+)/(?P<component>[\w.+-]+)/$', pgweb.apt.views.source),
+    url(r'^repos/apt/source/(?P<package_name>[\w.+-]+)/(?P<release>[\w.+-]+)/(?P<component>[\w.+-]+)/(?P<filename>copyright|debchangelog|changelog)/$', pgweb.apt.views.source),
+
+    url(r'^repos/apt/binaries/$', RedirectView.as_view(url='/repos/apt/dists/', permanent=True)),
+    url(r'^repos/apt/binaries/(?P<release>[\w.+-]+)/$', pgweb.apt.views.binaries),
+    url(r'^repos/apt/binaries/(?P<release>[\w.+-]+)/(?P<component_name>[\w\-\.]+)/$', pgweb.apt.views.binaries),
+
+    url(r'^repos/apt/binary/$', RedirectView.as_view(url='/repos/apt/dists/', permanent=True)),
+    url(r'^repos/apt/binary/(?P<package_name>[\w.+-]+)/$', pgweb.apt.views.binary),
+    url(r'^repos/apt/binary/(?P<package_name>[\w.+-]+)/(?P<release>[\w.+-]+)/$', pgweb.apt.views.binary),
+    url(r'^repos/apt/binary/(?P<package_name>[\w.+-]+)/(?P<release>[\w.+-]+)/(?P<component>[\w.+-]+)/$', pgweb.apt.views.binary),
+    url(r'^repos/apt/binary/(?P<package_name>[\w.+-]+)/(?P<release>[\w.+-]+)/(?P<component>[\w.+-]+)/(?P<arch>[\w.+-]+)/contents/$', pgweb.apt.views.binary_contents),
+
+    url(r'^repos/apt/search/$', pgweb.apt.views.search),
+    url(r'^repos/apt/madison/$', pgweb.apt.views.madison), # machine-readable search interface
+    url(r'^repos/apt/qa/$', pgweb.apt.views.qa),
+    url(r'^repos/apt/qa/(?P<query>[\w.+-]+)/$', pgweb.apt.views.qa),
 
     ###
     # Workaround for broken links pushed in press release

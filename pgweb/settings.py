@@ -115,6 +115,7 @@ INSTALLED_APPS = [
     'pgweb.featurematrix',
     'pgweb.search',
     'pgweb.pugs',
+    'pgweb.apt',
 ]
 
 # Default format for date/time (as it changes between machines)
@@ -160,6 +161,8 @@ ARCHIVES_SEARCH_PLAINTEXT = False                           # Contact ARCHIVES_S
 FRONTEND_SMTP_RELAY = "magus.postgresql.org"                # Where to relay user generated email
 OAUTH = {}                                                  # OAuth providers and keys
 PGDG_ORG_ID = -1                                            # id of the PGDG organisation entry
+
+APT_DIR = "/srv/apt/pub/repos/apt"                          # Directory containing the dists/ dir from apt.postgresql.org
 
 # Load local settings overrides
 from settings_local import *

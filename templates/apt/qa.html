@@ -1,0 +1,33 @@
+{%extends "base/page.html"%}
+{%block title%}{{description}}{%endblock%}
+{%block contents%}
+<div id="pgCommunityWrap">
+<div id="pgCommunity">
+<h1>{{description}}</h1>
+
+{% if query %}
+
+<table border="0">
+{% for row in result %}
+<tr>
+  {% for column in row %}
+  <td>{{column}}</td>
+  {% endfor %}
+</tr>
+{% endfor %}
+</table>
+
+{% else %}
+
+<ul>
+    <li><a href="binary_missing_on_architecture/">Binary missing on architecture</a></li>
+    <li><a href="wrong_tag_in_version/">Wrong tag in version</a></li>
+    <li><a href="binary_without_source/">Binary without source</a></li>
+    <li><a href="binary_in_sid_only/">Binary in sid-pgdg only</a></li>
+    <li><a href="binary_with_old_version/">Binary with old version</a></li>
+    <li><a href="source_without_binary/">Source without binaries</a></li>
+</ul>
+
+{% endif %}
+
+{%endblock%}

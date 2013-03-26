@@ -1,0 +1,12 @@
+<li>
+{% for alternative in dep %}
+    {% if alternative.3 %}
+        <a href="/repos/apt/binary/{{alternative.1}}/{{current_release}}/"
+            title="View details for Package {{alternative.1}}">{{alternative.1}}</a>
+        {{alternative.2}}
+    {% else %}
+        {{alternative.0}}
+    {% endif %}
+    {% if alternative != dep|last %} | {% endif %}
+{% endfor %}
+</li>

@@ -1,0 +1,20 @@
+{%extends "base/page.html"%}
+{%block title%}Distributions on apt.postgresql.org{%endblock%}
+{%block contents%}
+<h1>Distributions</h1>
+<p>
+<div class="tblBasic">
+    <table>
+        {% for release in releases %}
+        <tr>
+            <th>{{release.vendor_id}} {{release.relversion}}</th>
+            <th>{{release.release}}</th>
+            <td><a href="/repos/apt/binaries/{{release.release}}/" title="Binary packages in {{release.release}}">Binaries</a></td>
+            <td><a href="/repos/apt/sources/{{release.release}}/" title="Source packages in {{release.release}}">Sources</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+</p>
+
+{%endblock%}

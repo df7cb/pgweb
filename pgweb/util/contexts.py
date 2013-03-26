@@ -83,6 +83,15 @@ sitenav = {
         {'title': 'Change password', 'link': '/account/changepwd/'},
         {'title': 'Logout', 'link': '/account/logout'},
     ],
+    'apt': [
+        {'title': 'APT Repository', 'link': '/repos/apt/'},
+        {'title': 'Distributions', 'link': '/repos/apt/dists/'},
+        {'title': 'Search', 'link': '/repos/apt/search/', 'submenu': [
+            {'title': 'Query API', 'link': '/repos/apt/madison/'},
+            {'title': 'Repository QA', 'link': '/repos/apt/qa/'},
+        ]},
+        {'title': 'Wiki', 'link': 'http://wiki.postgresql.org/wiki/Apt'},
+    ],
 }
 
 

@@ -1,0 +1,46 @@
+{%extends "base/page.html"%}
+{%block title%}Binary Packages in {{suite.release_id}}/{{suite.component_id}}{%endblock%}
+{%block contents%}
+<div id="pgCommunityWrap">
+<div id="pgCommunity">
+<h1>Binary Packages in {{suite.release_id}}/{{suite.component_id}} ({{binaries|length}})</h1>
+
+<p>
+<ul>
+{% for binary in binaries %}
+    <li>
+        <b><a href="/repos/apt/binary/{{binary}}/{{suite.release_id}}/{{suite.component_id}}/"
+            title="click for details to package {{binary}}">{{binary}}</a></b>
+        {{binary.version}} <br />
+        {{binary.short_description}}
+    </li>
+{% endfor %}
+</ul>
+</p>
+</div>
+</div>
+
+{% if components|length > 1 %}
+<div id=pgAptWrap>
+<div id=pgApt>
+<dl>
+    <dt>Other Components</dt>
+    <dd>
+        <ul>
+        {% for component in components %}
+            <li>
+                {% if component.component != suite.component_id %}
+                    <a href="/repos/apt/binaries/{{suite.release_id}}/{{component}}/">{{component}}</a>
+                {% else %}
+                    <b>{{component}}</b>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    </dd>
+</dl>
+</div>
+</div>
+{% endif %}
+
+{%endblock%}

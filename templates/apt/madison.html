@@ -1,0 +1,50 @@
+{%extends "base/page.html"%}
+{%block title%}Query apt.postgresql.org{%endblock%}
+{%block contents%}
+
+<script>
+function toggle(x) {
+    var oContent=document.getElementById(x) ;
+    if (oContent.style.display=="block") {
+        oContent.style.display="none";
+    } else {
+        oContent.style.display="block";
+    }
+}
+</script>
+
+<h1>Query apt.postgresql.org</h1>
+
+<form action="/repos/apt/madison/" method="get">
+    <input type="text" name="package" value="{{package}}">
+    <input type="submit" value="Search"> <br />
+    Enter a package name
+    <span onclick='javascript:toggle("config")'>(Click for more options)</span><br />
+    <div id="config" style="display:{{configdisplay}};">
+    <table border="0">
+        <tr><td>Regexp search</td><td><input type="checkbox" name="r" {{r}}></td></tr>
+        <tr><td>Text output</td><td><input type="checkbox" name="text"></td></tr>
+        <tr><td>Architecture</td><td><input type="text" name="a" value="{{a}}"></td></tr>
+        <tr><td>Component</td><td><input type="text" name="c" value="{{c}}"></td></tr>
+        <tr><td>Distribution</td><td><input type="text" name="s" value="{{s}}"></td></tr>
+    </table>
+    </div>
+</form>
+
+
+{% if package %}
+<h2>Results for <span class="pgAptPattern">"{{package}}"</span></h2>
+
+<pre>{{content}}</pre>
+
+{% else %}
+
+<p>
+A command line client for this page is
+<a href="https://manpages.debian.org/devscripts/rmadison.1.html">rmadison(1)</a>
+contained in the
+<a href="https://packages.debian.org/devscripts">devscripts</a> package.
+</p>
+{% endif %}
+
+{%endblock%}

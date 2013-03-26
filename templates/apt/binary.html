@@ -1,0 +1,167 @@
+{%extends "base/page.html"%}
+{%block title%}Package {{package}} ({{package.version}}) in {{current_release}}{% if current_component != "main" %}/{{current_component}}{% endif %}{%endblock%}
+{%block contents%}
+<div id="pgCommunityWrap">
+<div id="pgCommunity">
+<h1>{{package}} ({{package.version}}) in {{current_release}}{% if current_component != "main" %}/{{current_component}}{% endif %}</h1>
+
+<p>
+<b>{{package.short_description}}</b>
+</p>
+
+<p>
+{% autoescape off %}
+{{package.description}}
+{% endautoescape %}
+</p>
+
+{% if package.homepage %}
+<p><b>Homepage:</b>
+    <a href="{{package.homepage}}"
+        target="_blank"
+        title="Go to homepage of {{package}}">{{package.homepage}}</a>
+{% endif %}
+
+<p>
+<b>Maintainer:</b> {{ package.maintainer }}
+</p>
+
+{% if package.vcs_browser or package.vcs_repo%}
+<h2>VCS</h2>
+
+    {% if package.vcs_browser %}
+<h3>Browser</h3>
+<p>
+    <a href="{{package.vcs_browser}}" 
+        target="_blank" 
+        title="Go to VCS-Browser of {{package}}">{{package.vcs_browser}}</a>
+<p>
+    {% endif %}
+
+    {% if package.vcs_repo %}
+<h3>Repository</h3>
+<p>
+    <a href="{{package.vcs_repo}}" 
+        target="_blank" 
+        title="Get the current version of {{package}}">{{package.vcs_repo}}</a>
+<p>
+    {% endif %}
+{% endif %}
+
+{% if dependencies or recommendations or suggestions %}
+<h2>Related Packages</h2>
+{% if dependencies %}
+<h3>Dependencies {% if package.arch_id != "all" %} (on {{package.arch_id}}) {% endif %}</h3>
+<ul>
+    {% for dep in dependencies %}
+        {% include "apt/dependency.html" %}
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if recommendations %}
+<h3>Recommendations</h3>
+<ul>
+    {% for dep in recommendations %}
+        {% include "apt/dependency.html" %}
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if suggestions %}
+<h3>Suggestions</h3>
+<ul>
+    {% for dep in suggestions %}
+        {% include "apt/dependency.html" %}
+    {% endfor %}
+</ul>
+{% endif %}
+{% endif %}
+
+<h2>Download {{package}} for {{current_release}}</h2>
+<div class="tblBasic">
+<table>
+    <tr>
+        <th>Architecture</th>
+        <th>Package Size</th>
+        <th>Installed Size</th>
+        <th>File List</th>
+    </tr>
+    {% for download in downloads %}
+    <tr>
+        <td>
+            <a href="http://apt.postgresql.org/pub/repos/apt/{{download.filename}}"
+                title="Download {{download}} for {{download.arch_id}}">{{download.arch_id}}</a>
+        </td>
+        <td>{{download.size|filesizeformat}}</td>
+        <td>{{download.installed_size|filesizeformat}}</td>
+        <td><a href="/repos/apt/binary/{{package}}/{{current_release}}/{{current_component}}/{{download.arch_id}}/contents/">File List</a></td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+</div>
+</div>
+
+<div id=pgAptWrap>
+<div id=pgApt>
+<dl>
+    <dt>Source</dt>
+    <dd>
+    <ul>
+        <li><a href="/repos/apt/source/{{package.source}}/{{current_release}}/">{{package.source}}</a></li>
+        <li><a href="/repos/apt/source/{{package.source}}/{{current_release}}/copyright/">Copyright file</a></li>
+        <li><a href="/repos/apt/source/{{package.source}}/{{current_release}}/debchangelog/">Package changelog</a></li>
+        <li><a href="/repos/apt/source/{{package.source}}/{{current_release}}/changelog/">Upstream changelog</a></li>
+    </ul>
+    </dd>
+</dl>
+</div>
+</div>
+
+
+{% if components|length > 1 %}
+<div id=pgAptWrap>
+<div id=pgApt>
+<dl>
+    <dt>This Package in other Components</dt>
+    <dd>
+        <ul>
+{% for comp in components %}
+    {% if comp.component == current_component %}
+        <li><b>{{comp}}</b></li>
+    {% else %}
+        <li>
+            <a href="/repos/apt/binary/{{package}}/{{current_release}}/{{comp}}/">{{comp}}</a>
+        </li>
+    {% endif %}
+{% endfor %}
+        </ul>
+    </dd>
+</dl>
+</div>
+</div>
+{% endif %}
+
+<div id=pgAptWrap>
+<div id=pgApt>
+<dl>
+    <dt>Distributions</dt>
+    <dd>
+        <ul>
+            {% for dist in distributions %}
+            <li>
+            {% if current_release and current_release == dist.release_id %}
+                <b>{{dist.release_id}}</b>
+            {% else %}
+                <a href="/repos/apt/binary/{{package}}/{{dist.release_id}}/">{{dist.release_id}}</a>
+            {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </dd>
+</dl>
+</div>
+</div>
+
+{%endblock%}

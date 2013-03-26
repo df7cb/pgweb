@@ -1,0 +1,87 @@
+{%extends "base/page.html"%}
+{%block title%}Search apt.postgresql.org{%endblock%}
+{%block contents%}
+<h1>Search on apt.postgresql.org</h1>
+
+<h2>Search for Packages</h2>
+
+<form action="/repos/apt/search/" method="get">
+    <input type="text" name="package" value="{{package}}">
+    <input type="submit" value="Search">
+</form>
+
+Enter a package name or substring
+
+{% if package %}
+<h2>Results for <span class="pgAptPattern">"{{package}}"</span></h2>
+
+    <div class="pgAptList">
+        <h3>Binary Packages: {{result_binaries|length}}</h3>
+    {% if result_binaries %}
+        <dl>
+
+        {% for binary in result_binaries %}
+            <dt><a href="/repos/apt/binary/{{binary}}/">{{binary}}</a></dt>
+            <dd>{{binary.short_description}}</dd>
+        {% endfor %}
+
+        </dl>
+    {% else %}
+        <p>
+            No packages found.
+        </p>
+    <div>
+    {% endif %}
+
+    <div class="pgAptList">
+        <h3>Source Packages: {{result_sources|length}}</h3>
+    {% if result_sources %}
+        <dl>
+
+        {% for source in result_sources %}
+            <dt><a href="/repos/apt/source/{{source}}/">{{source}}</a></dt>
+            <dd>{{source.short_description}}</dd>
+        {% endfor %}
+
+        </dl>
+    {% else %}
+        <p>
+            No packages found.
+        </p>
+    <div>
+    {% endif %}
+{% endif %}
+
+<h2>Search for Files in Packages</h2>
+
+<form action="/repos/apt/search/" method="get">
+    <input type="text" name="file" value="{{filename}}">
+    <input type="submit" value="Search">
+</form>
+
+Enter a filename or substring
+
+{% if filename %}
+<h2>Results for <span class="pgAptPattern">"{{filename}}"</span></h2>
+
+    <div class="pgAptList">
+    {% if result_filenames %}
+        {% if result_filenames|length >= maxresults %}
+            <h3>Files: Too many results, only {{maxresults}} will be shown</h3>
+        {% else %}
+            <h3>Files: {{result_filenames|length}}</h3>
+        {% endif %}
+        <table border="0">
+            {% for file in result_filenames %}
+            <tr><td>{{file.filename}}</td><td><a href="/repos/apt/binary/{{file.package}}/">{{file.package}}</a></td></tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>
+            No packages found.
+        </p>
+    {% endif %}
+    </div>
+{% endif %}
+
+{%endblock%}

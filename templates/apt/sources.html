@@ -1,0 +1,18 @@
+{%extends "base/page.html"%}
+{%block title%}Source Packages in {{release}}{%endblock%}
+{%block contents%}
+<h1>Source Packages in {{release}} ({{sources|length}})</h1>
+
+<p>
+<ul>
+    {% for source in sources %}
+    <li>
+    <b><a href="/repos/apt/source/{{source}}/{{release}}/">{{source}}</a></b>
+        {{source.srcversion}} <br />
+    {{source.short_description}}
+    </li>
+    {% endfor %}
+</ul>
+</p>
+
+{%endblock%}

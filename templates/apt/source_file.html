@@ -1,0 +1,66 @@
+{%extends "base/page.html"%}
+{%block title%}{{title}} for {{package}} ({{package.srcversion}}) in {{current_release}}{%endblock%}
+{%block contents%}
+<div id="pgCommunityWrap">
+<div id="pgCommunity">
+<h1>{{title}} for {{package}} ({{package.srcversion}}) in {{current_release}}</h1>
+
+<p>
+<b>{{package.short_description}}</b>
+</p>
+
+<pre>
+{{content}}
+</pre>
+
+</div>
+</div>
+
+<div id=pgAptWrap>
+<div id=pgApt>
+<dl>
+    <dt>Source</dt>
+    <dd>
+    <ul>
+        <li><a href="/repos/apt/source/{{package.source}}/{{current_release}}/">{{package.source}}</a></li>
+
+    {% if filename == "copyright" %}
+        <li><b>Copyright file</b></li>
+    {% else %}
+        <li><a href="/repos/apt/source/{{package.source}}/{{current_release}}/copyright/">Copyright file</a></li>
+    {% endif %}
+
+    {% if filename == "debchangelog" %}
+        <li><b>Package changelog</b></li>
+    {% else %}
+        <li><a href="/repos/apt/source/{{package.source}}/{{current_release}}/debchangelog/">Package changelog</a></li>
+    {% endif %}
+
+    {% if filename == "changelog" %}
+        <li><b>Upstream changelog</b></li>
+    {% else %}
+        <li><a href="/repos/apt/source/{{package.source}}/{{current_release}}/changelog/">Upstream changelog</a></li>
+    {% endif %}
+    </ul>
+    </dd>
+</dl>
+</div>
+</div>
+
+<div id=pgAptWrap>
+<div id=pgApt>
+<dl>
+    <dt>Binaries</dt>
+    <dd>
+        <ul>
+        {% for binary in binaries %}
+        <li>
+            <a href="/repos/apt/binary/{{binary}}/{{current_release}}/">{{binary}}</a></li>
+        {% endfor %}
+        </ul>
+    </dd>
+</dl>
+</div>
+</div>
+
+{%endblock%}

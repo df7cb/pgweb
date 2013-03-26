@@ -1,0 +1,14 @@
+{%extends "base/page.html"%}
+{%block title%}File List of Package {{package}} ({{package.version}} {{package.arch.architecture}}){%endblock%}
+{%block contents%}
+<div id="pgCommunityWrap">
+<div id="pgCommunity">
+<h1>{{package}} ({{package.version}} {{package.arch.architecture}}) in {{current_release}} File List</h1>
+<p>
+<nobr>
+{% for file in contents %}{{file.filename}}<br />
+{% endfor %}
+</nobr>
+</p>
+
+{%endblock%}
