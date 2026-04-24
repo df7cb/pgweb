@@ -47,6 +47,7 @@ sitenav = {
     'community': [
         {'title': 'Community', 'link': '/community/'},
         {'title': 'Contributors', 'link': '/community/contributors/'},
+        {'title': 'People', 'link': '/community/people/'},
         {'title': 'Mailing Lists', 'link': '/list/'},
         {'title': 'IRC', 'link': '/community/irc/'},
         # {'title': 'Slack', 'link': 'https://join.slack.com/t/postgresteam/shared_invite/zt-1qj14i9sj-E9WqIFlvcOiHsEk2yFEMjA'},
@@ -86,6 +87,7 @@ sitenav = {
             {'title': 'Events', 'link': '/account/edit/events/'},
             {'title': 'Products', 'link': '/account/edit/products/'},
             {'title': 'Professional Services', 'link': '/account/edit/services/'},
+            {'title': 'Contributor Badges', 'link': '/account/edit/badges/'},
             {'title': 'Organisations', 'link': '/account/edit/organisations/'},
         ]},
         {'title': 'Change password', 'link': '/account/changepwd/'},
